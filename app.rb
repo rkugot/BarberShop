@@ -30,9 +30,14 @@ post '/visit' do
 
 	hh = { :username => 'Введите имя',
 		   :phone => 'Введите телефон', 
-		   :datetime => 'Введите дату и время'}
+		   :datetime => 'Введите дату и время',
+		   }
 
 	@error = hh.select{|key,value| params[key] == ''}.values.join(', ') 
+
+	if @barber == 'Выберите парикмахера из списка'
+		@error = @error + ", Выберите парикмахера"
+	end
 
 	if @error != ''
 		return erb :visit
