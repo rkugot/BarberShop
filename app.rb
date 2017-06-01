@@ -2,7 +2,21 @@
 require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
-require 'pony'
+require 'sqlite3'
+
+configure do
+	@db = SQLite3::Database.new('barbershop.db')
+	@db.execute 'CREATE TABLE IF NOT EXISTS
+		"Users"
+		(
+			"id" INTEGER PRIMARY KEY AUTOINCREMENT,
+			"username" TEXT,
+			"phone" TEXT,
+			"datestamp" TEXT,
+			"barber" TEXT,
+			"color" TEXT
+		)'
+end
 
 get '/' do
 	erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"			
@@ -61,25 +75,5 @@ post '/contacts' do
 		return erb :contacts
 	end
 
-	Pony.mail(
-	  :mail => params[:email],
-	  :body => params[:message],
-	  :to => 'stream13k@gmail.com',
-	  :subject => "Sinatra has contacted you",
-	  :body => params[:message],
-	  :port => '587',
-	  :via => :smtp,
-	  :via_options => { 
-	    :address              => 'smtp.gmail.com', 
-	    :port                 => '587', 
-	    :enable_starttls_auto => true, 
-	    :user_name            => 'stream13k', 
-	    :password             => 'qwe7891', 
-	    :authentication       => :plain, 
-	    :domain               => 'localhost.localdomain'
-	  })
-
-
 	erb "Ваше сообщение отправлено"
-
 end
