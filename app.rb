@@ -101,7 +101,7 @@ post '/visit' do
 	db.execute('insert into Users (username, phone, datestamp, barber, color) 
 		values (?,?,?,?,?)',[@username, @phone, @datetime, @barber, @color])
 
-	erb "#{@username}, Вы записаны на #{@datetime} к мастеру #{@barber}, цвет краски: #{@color}"
+	erb "<h2>Спасибо #{@username}, Вы записались</h2>"
 end
 
 post '/contacts' do
