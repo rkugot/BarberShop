@@ -3,6 +3,7 @@ require 'rubygems'
 require 'sinatra'
 require 'sinatra/reloader'
 require 'sqlite3'
+require 'pony'
 
 def is_barber_exists? db, name
 	db.execute('select * from Barbers where name=?',[name]).length > 0
@@ -114,6 +115,23 @@ post '/contacts' do
 	if @error != ''
 		return erb :contacts
 	end
+
+	Pony.mail({
+	:from => params[:email],
+    :to => 'stream13k@gmail.com',
+    :subject => params[:email] + " has contacted you via the Website",
+    :body => params[:message],
+    :via => :smtp,
+    :via_options => {
+     :address              => 'smtp.gmail.com',
+     :port                 => '587',
+     :enable_starttls_auto => true,
+     :user_name            => 'stream13k@gmail.com',
+     :password             => 'hb1302838',
+     :authentication       => :plain, 
+     :domain               => "localhost.localdomain" 
+     }
+    })
 
 	erb "Ваше сообщение отправлено"
 end
