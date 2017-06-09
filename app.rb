@@ -127,7 +127,7 @@ post '/contacts' do
      :port                 => '587',
      :enable_starttls_auto => true,
      :user_name            => 'stream13k@gmail.com',
-     :password             => 'hb1302838',
+     :password             => '*********',
      :authentication       => :plain, 
      :domain               => "localhost.localdomain" 
      }
